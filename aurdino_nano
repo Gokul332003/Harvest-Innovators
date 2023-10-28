@@ -1,0 +1,40 @@
+
+int soilMoisturePin1 = A0; // Analog pin connected to the first soil moisture sensor
+int soilMoisturePin2 = A1; // Analog pin connected to the second soil moisture sensor
+int relayPin1 = 3; // Digital pin connected to the relay module for plant 1
+int relayPin2 = 4; // Digital pin connected to the relay module for plant 2
+
+void setup() {
+  pinMode(relayPin1, OUTPUT);
+  pinMode(relayPin2, OUTPUT);
+  Serial.begin(9600); // Initialize the Serial Monitor
+}
+
+void loop() {
+  int soilMoistureValue1 = analogRead(soilMoisturePin1); // Read analog value from the first sensor
+  int soilMoistureValue2 = analogRead(soilMoisturePin2); // Read analog value from the second sensor
+
+  Serial.print("Plant 1 - Soil Moisture: ");
+  Serial.print(soilMoistureValue1);
+
+  if (soilMoistureValue1 > 500) {
+    digitalWrite(relayPin1, LOW); // Watering plant 1
+    Serial.println(" Watering plant 1");
+  } else {
+    digitalWrite(relayPin1, HIGH); // Motor off for plant 1
+    Serial.println(" Motor is off");
+  }
+
+  Serial.print("Plant 2 - Soil Moisture: ");
+  Serial.print(soilMoistureValue2);
+
+  if (soilMoistureValue2 > 600) {
+    digitalWrite(relayPin2, LOW); // Watering plant 2
+    Serial.println(" Watering plant 2");
+  } else {
+    digitalWrite(relayPin2, HIGH); // Motor off for plant 2
+    Serial.println(" Motor is off");
+  }
+  
+  delay(1000); // Delay for 1 second before taking the next reading
+} 
